@@ -1,0 +1,13 @@
+.vscode/
+*.exe
+*.obj
+*.o
+*.out
+*.log
+*.user
+*.suo
+*.vcxproj*
+*.class
+build/
+Debug/
+Release/
