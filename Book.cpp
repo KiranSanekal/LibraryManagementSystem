@@ -1,16 +1,17 @@
-class Book
-{
-private:
-    /* data */
-public:
-    Book(/* args */);
-    ~Book();
-};
+#include<Book.h>
 
-Book::Book(/* args */)
+void Book::storeMetaData(string bookid, string bookTitle, string bookAuthor, bool bookStatus)
 {
+    //To be discussed with daisy
+    this->author=bookAuthor;
+
+
+
 }
 
-Book::~Book()
+bool Book::statusBorrowed(string uniqueID)
 {
+    return availabilityStatus;
+
 }
+
