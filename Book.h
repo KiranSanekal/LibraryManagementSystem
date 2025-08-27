@@ -10,7 +10,7 @@ class Book
     string author;
     bool availabilityStatus;
 
-    void storeMetaData(string bookid, string bookTitle, string bookAuthor, bool bookStatus);
+    void storeMetaData(int bookid, string bookTitle, string bookAuthor, bool bookStatus);
     bool statusBorrowed(string uniqueID);
 
 };

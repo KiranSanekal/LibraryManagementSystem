@@ -1,8 +1,8 @@
 #include<iostream>
 using namespace std;
 #include<vector>
-#include<Book.h>
-#include<Member.h>
+#include "Book.h"
+#include "Member.h"
 
 class Library
 {
@@ -11,8 +11,8 @@ class Library
     vector<Book>listofBooks;
     enum action {borrowBook, acceptBook};
 
-    void addBook(Book x, vector<Book>&listofBooks);
-    void removeBook(const Book &x, vector<Book>&listofBooks);
+    void addBook(Book x);
+    void removeBook(const int &x);
     bool searchBook(const Book &x, vector<Book>&listofBooks);
     void addMember(Member x, vector<Member>&listOfMembers);
     void removeMember(int id, vector<Member>&listOfMembers);

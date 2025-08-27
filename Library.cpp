@@ -1,13 +1,13 @@
 #include<Library.h>
 
 
-void Library::addBook(Book x, vector<Book>&listofBooks)
+void Library::addBook(Book x)
 {
     listofBooks.push_back(x);
 }
 
 
-void Library::removeBook(const Book &x, vector<Book>&listofBooks)
+void Library::removeBook(const int &x)
 {
     int idToRemove=x.uniqueID;
     for(auto i:listofBooks)
