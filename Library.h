@@ -9,15 +9,15 @@ class Library
     public:
     vector<Member>listOfMembers;
     vector<Book>listofBooks;
-    enum action {borrowBook, acceptBook};
+    enum action {borrowBook=1, acceptBook=2};
 
-    void addBook(Book x);
+    void addBook(Book &x);
     void removeBook(const int &x);
-    bool searchBook(const Book &x, vector<Book>&listofBooks);
-    void addMember(Member x, vector<Member>&listOfMembers);
-    void removeMember(int id, vector<Member>&listOfMembers);
-    bool searchMember(const Member &x, vector<Member>&listOfMembers);
-    void manageBooks(const Book &x, enum action, vector<Book>&listofBooks);
-    bool checkMember(int memID, vector<Member>&listOfMembers);
-    bool bookAvailability(Book x, vector<Book>&listofBooks);
+    bool searchBook(const int &x);
+    void addMember(Member &x);
+    void removeMember(int id);
+    bool searchMember(const int &x);
+    void manageBooks(const int &x, const int &z);
+    bool checkMember(const int memID);
+    bool bookAvailability(Book x);
 };

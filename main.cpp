@@ -36,6 +36,15 @@ int getbookIDfromstaff()
     return userChoice;
 
 }
+int getactionfromstaff()
+{
+    cout<<"What do you want to do\n"
+    "1. Borrow book\n"
+    "2. Return Book" <<endl; 
+    std::cin>>userChoice;
+    return userChoice;
+
+}
 
 Member getmemberfromstaff()
 {
@@ -46,6 +55,15 @@ Member getmemberfromstaff()
     cin>>m.memberID;
 
 }
+
+int getmemberIDfromstaff()
+{
+    
+    cout<<"Enter Member ID : \n";
+    std::cin>>userChoice;
+    return userChoice;
+}
+
 
 int showMainMenu()
 {
@@ -70,27 +88,80 @@ int showMainMenu()
 
 int showStaffMenu()
 {
-    cout<<"What do you want to do\n";
-    cout<<"1. Add book\n";
-    cout<<"2. Remove book\n";
-    cout<<"3. Search member\n";
-    switch(userChoice)
+    
+    do
     {
-        case 1:
+        cout<<"What do you want to do\n";
+        cout<<"1. Add book\n";
+        cout<<"2. Remove book\n";
+        cout<<"3. Search book\n";
+        cout<<"4. Search member\n";
+        cout<<"5. Mange book\n";
+        cout<<"6. Add member\n";
+      
+    
+    
+        switch(userChoice)
         {
-            Book b=getbookfromstaff();
-            lib.addBook(b);
+            case 1:
+            {
+                Book b=getbookfromstaff();
+                lib.addBook(b);
+                cout<<"Book" <<b.title << "succesfully added"<<endl;
+                break;
 
-        }
-        case 2:
-        {
-            int id;
-            id=getbookIDfromstaff();
-            lib.removeBook(id);
+            }
+            case 2:
+            {
+                int id;
+                id=getbookIDfromstaff();
+                lib.removeBook(id);
+                break;
+            }
+            case 3:
+            {
+                int id;
+                id=getbookIDfromstaff();
+                lib.searchBook(id);
+                break;
+            }
+            case 4:
+            {
+                int id;
+                id=getmemberIDfromstaff();
+                lib.searchMember(id);
+                break;
+            }
+            case 5:
+            {
+                int action_select;
+                int id;
+                action_select=getactionfromstaff();
 
+                if(action_select==1)
+                {
+                    lib.manageBooks(id, action_select);
+
+                }
+                if(action_select==2)
+                {
+                    lib.manageBooks(id,action_select);
+
+                }
+                
+                break;
+            }
+            case 6:
+            {
+                Member m;
+                m=getmemberfromstaff();
+                break;
+            }
+            
             
         }
-    }
+
+    } while (userChoice!=0);
     
 }
 
@@ -99,61 +170,7 @@ int showStaffMenu()
 
 int main()
 {
-    int userIn;
-
-    
-    cout<<"Welcome to Daisy library"<<endl;
-    cout<<"Which among the following are you"<<endl;
-    cout<<endl;
-    cout<<"1. Staff\n"
-    "2. Member" <<endl;
-    cin>>userIn;
-    
-    cin>>userIn;
-    switch (userIn)
-    {
-    case 1:
-    {
-        
-
-
-    }
-        
-
-        cout<<"";
-
-        break;
-    
-    default:
-        break;
-    }
-    if(userIn==1)
-    {
-        
-        cout<<"2. Remove book"<<endl;
-
-
-    }
-    cout<<"Your response: ";
-    cin>>userIn;
-
-    if(userIn==1)
-    {
-
-    cout<<"What do you want to do\n"
-    "1. Borrow book\n"
-    "2. Return Book" <<endl;
-    cin>>userIn;
-    switch (userIn)
-    {
-    case 1:
-        /* code */
-        break;
-    
-    case 2:
-        break;
-    }
-
+    showMainMenu();
 
 
 }
