@@ -1,6 +1,6 @@
 using namespace std;
-#include <iostream>;
-#include <vector>; 
+#include <iostream>
+#include <vector>
 
 class Book
 {

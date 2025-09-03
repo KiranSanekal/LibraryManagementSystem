@@ -1,4 +1,10 @@
-#include<Library.h>
+#include "Library.h"
+using namespace std;
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm> 
+
 
 
 void Library::addBook(Book &x)
@@ -12,22 +18,30 @@ void Library::removeBook(const int &x)
     int idToRemove=x;
     for(auto i:listofBooks)
     {
-       auto newEnd=remove_if(listofBooks.begin(),listofBooks.end(),[idToRemove](const Book &x){return x.uniqueID==idToRemove;});
+       auto newEnd= std::remove_if(listofBooks.begin(),listofBooks.end(),[idToRemove](const Book &x){return x.uniqueID==idToRemove;});
        listofBooks.erase(newEnd,listofBooks.end());
     }
 }
 
 
-bool Library::searchBook(const int &x)
+int Library::searchBook(const int &x)
 {
     for(auto i:listofBooks)
     {
         if(i.uniqueID==x)
         {
-            return true;
+            if(i.availabilityStatus==true)
+            {
+                 return 1;
+            }
+            else if (i.availabilityStatus==false)
+            {
+                return 2;
+            }
+            
         }
-
     }
+    return 3;
 }
 
 void Library::addMember(Member &x)
@@ -44,11 +58,11 @@ bool Library::searchMember(const int &x)
             return true;
         }
     }
-
+    return false;
     
 }
 
-void Library::manageBooks(const int &x, const int &z)
+void Library::manageBooks(const int &x, const int &y, const int &z)
 {
     if (z==borrowBook)
     {
@@ -56,11 +70,23 @@ void Library::manageBooks(const int &x, const int &z)
         {
             if (book.uniqueID == x)
             {
-                book.availabilityStatus = false;
+                for(auto &m:listOfMembers)
+                {
+                    if(m.memberID==y)
+                    {
+                        m.borrowedBookIDs.push_back(x);
+                        book.availabilityStatus = false;
+
+                    }
+
+
+                }
+                
+
                 break;
             }
         }
-        removeBook(x);
+        //removeBook(x);
     }
     else
     {
@@ -86,6 +112,6 @@ bool bookAvailability(Book &x)
     {
         return true;
     }
-
+    return false;
 }
 

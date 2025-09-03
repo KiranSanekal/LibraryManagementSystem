@@ -1,6 +1,7 @@
 #include "Library.h"
 #include <iostream>
 #include <string>
+#include <limits>
 
 using namespace std;
 Library lib;
@@ -8,9 +9,9 @@ Library lib;
 
 // === UI helpers ===
 int userChoice;
-int showMainMenu();
-int showUserMenu();
-int showStaffMenu();
+void showMainMenu();
+void showUserMenu();
+void showStaffMenu();
 Book getbookfromstaff();
 int getbookIDfromstaff();
 Member getmemberfromstaff();
@@ -19,6 +20,7 @@ Member getmemberfromstaff();
 Book getbookfromstaff()
 {
     Book b;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // flush newline
     std::cout<<"Enter book title: \n"; //Ask Title
     getline(cin,b.title);
     std::cout<<"Enter book author: \n"; 
@@ -39,8 +41,8 @@ int getbookIDfromstaff()
 int getactionfromstaff()
 {
     cout<<"What do you want to do\n"
-    "1. Borrow book\n"
-    "2. Return Book" <<endl; 
+    "1. Give book\n"
+    "2. Take Book" <<endl; 
     std::cin>>userChoice;
     return userChoice;
 
@@ -53,6 +55,7 @@ Member getmemberfromstaff()
     getline(cin, m.memName);
     cout<<"Enter Member ID : \n";
     cin>>m.memberID;
+    return m;
 
 }
 
@@ -63,30 +66,7 @@ int getmemberIDfromstaff()
     std::cin>>userChoice;
     return userChoice;
 }
-
-
-int showMainMenu()
-{
-    cout<<"Welcome to Daisy library"<<endl;
-    cout<<"Which among the following are you \n"<<endl;
-    cout<<"1. Staff \n"
-    "2. Member" <<endl;
-    switch(userChoice)
-    {
-        case 1:
-        {
-            showStaffMenu();
-
-        }
-        case 2:
-        {
-            showUserMenu();
-        }
-    }
-
-}
-
-int showStaffMenu()
+void showStaffMenu()
 {
     
     do
@@ -99,7 +79,7 @@ int showStaffMenu()
         cout<<"5. Mange book\n";
         cout<<"6. Add member\n";
       
-    
+        cin>>userChoice;
     
         switch(userChoice)
         {
@@ -107,7 +87,7 @@ int showStaffMenu()
             {
                 Book b=getbookfromstaff();
                 lib.addBook(b);
-                cout<<"Book" <<b.title << "succesfully added"<<endl;
+                cout<<"Book" <<b.title << " by "<<b.author<< " succesfully added"<<endl;
                 break;
 
             }
@@ -116,13 +96,37 @@ int showStaffMenu()
                 int id;
                 id=getbookIDfromstaff();
                 lib.removeBook(id);
+                cout<<"Book with ID "<<id<<" successfully removed."<<endl;
                 break;
             }
             case 3:
             {
-                int id;
-                id=getbookIDfromstaff();
-                lib.searchBook(id);
+                int bookid;
+                int res;
+                bookid=getbookIDfromstaff();
+                res=lib.searchBook(bookid);
+                if(res==1)
+                {
+                    cout<<"book exists and can be borrowed"<<endl;
+                    cout<<"Do you want to borrow it?"<<endl;
+                    cout<<"1.Yes\n";
+                    cout<<"2.Return to main menu"<<endl;
+                    cin>>userChoice;
+                    if(userChoice==1)
+                    {
+                        int memberid;
+                        memberid=getmemberIDfromstaff();
+                        lib.manageBooks(bookid,memberid, userChoice);
+                    }
+                }
+                else if(res==2)
+                {
+                    cout<<"book exists but not available at the moment"<<endl;
+                }
+                else if(res==3)
+                {
+                    cout<<"book doesnt exist in the library"<<endl;
+                }
                 break;
             }
             case 4:
@@ -132,6 +136,7 @@ int showStaffMenu()
                 lib.searchMember(id);
                 break;
             }
+            /*
             case 5:
             {
                 int action_select;
@@ -151,6 +156,11 @@ int showStaffMenu()
                 
                 break;
             }
+            
+            
+            */
+            
+            
             case 6:
             {
                 Member m;
@@ -165,6 +175,36 @@ int showStaffMenu()
     
 }
 
+void showUserMenu()
+{
+    cout<<"xxxx"<<endl;
+}
+
+
+
+void showMainMenu()
+{
+    cout<<"Welcome to Daisy library"<<endl;
+    cout<<"Which among the following are you \n"<<endl;
+    cout<<"1. Staff \n"
+    "2. Member" <<endl;
+    cin>>userChoice;
+    switch(userChoice)
+    {
+        case 1:
+        {
+            showStaffMenu();
+            break;
+
+        }
+        case 2:
+        {
+            showUserMenu();
+            break;
+        }
+    }
+
+}
 
 
 

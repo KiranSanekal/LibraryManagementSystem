@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 3.10)
+project(LibraryManagementSystem)
+include_directories(${CMAKE_SOURCE_DIR})
+file(GLOB SOURCES "*.cpp")
+add_executable(LibraryManagementSystem ${SOURCES})

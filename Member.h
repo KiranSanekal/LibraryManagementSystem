@@ -1,6 +1,6 @@
 using namespace std;
-#include <iostream>;
-#include <vector>; 
+#include <iostream>
+#include <vector>
 
 
 class Member
@@ -11,7 +11,7 @@ class Member
     enum action {borrowBook, returnBook};
     vector<int> borrowedBookIDs;
 
-    void recBorrowedBooks(int bookID, vector <int> &borrowedList);
+    void recBorrowedBooks(int bookID);
     void memAction(int bookID, enum action);
 
 };
