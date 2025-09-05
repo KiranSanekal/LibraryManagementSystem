@@ -7,12 +7,13 @@ void Book::storeMetaData(int bookid, string bookTitle, string bookAuthor, bool b
     this->availabilityStatus=true;
     this->uniqueID=bookid;
     this->title=bookTitle;
+    
 
 
 
 }
 
-bool Book::statusBorrowed(string uniqueID)
+bool Book::getbookStatus(string uniqueID)
 {
     return availabilityStatus;
 

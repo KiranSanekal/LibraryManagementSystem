@@ -10,6 +10,7 @@ using namespace std;
 void Library::addBook(Book &x)
 {
     listofBooks.push_back(x);
+    
 }
 
 
@@ -24,24 +25,29 @@ void Library::removeBook(const int &x)
 }
 
 
-int Library::searchBook(const int &x)
+bool Library::searchBook(const int &x)
+{
+    //cout<<listofBooks.size();
+    for(auto i:listofBooks)
+    {
+        if(i.uniqueID==x)
+        {
+            return 1;
+        }
+    }
+    return 2;
+}
+
+void Library::setBookStatus(int &x, const bool &y)
 {
     for(auto i:listofBooks)
     {
         if(i.uniqueID==x)
         {
-            if(i.availabilityStatus==true)
-            {
-                 return 1;
-            }
-            else if (i.availabilityStatus==false)
-            {
-                return 2;
-            }
-            
+            i.availabilityStatus=y;
         }
     }
-    return 3;
+
 }
 
 void Library::addMember(Member &x)
@@ -62,40 +68,45 @@ bool Library::searchMember(const int &x)
     
 }
 
-void Library::manageBooks(const int &x, const int &y, const int &z)
+int Library::BorrowedBookCountOfMember(const int &x)
 {
-    if (z==borrowBook)
+    for(auto i:listOfMembers)
     {
-        for (auto &book : listofBooks)
+        return (i.borrowedBookIDs.size());
+    }
+
+}
+
+void Library::manageBooks(const int &bookid, const int &memberid, const int &userChoice)
+{
+    if (userChoice==1)
+    {
+            
+        if(BorrowedBookCountOfMember(memberid)<3)
         {
-            if (book.uniqueID == x)
-            {
-                for(auto &m:listOfMembers)
-                {
-                    if(m.memberID==y)
-                    {
-                        m.borrowedBookIDs.push_back(x);
-                        book.availabilityStatus = false;
+            
+            setBookStatus(x)
+            cout<<book.title<<" successfully assigned to "<<m.memName<<endl;
+            break;
+        }
+        else
+        {
+            cout<<m.memName<<"  has already reached the max limit for borrowing books"<<endl;
+            break;
 
-                    }
-
-
-                }
-                
-
-                break;
+        }
             }
         }
-        //removeBook(x);
-    }
-    else
+
+    else if (z==2)
     {
         for (auto &book : listofBooks)
         {
             if (book.uniqueID == x)
             {
-                book.availabilityStatus = false;
                 addBook(book);
+                book.availabilityStatus = true;
+                cout<<"Book return successful"<<endl;
                 break;
             }
         }

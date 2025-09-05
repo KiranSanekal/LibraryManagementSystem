@@ -13,11 +13,17 @@ class Library
 
     void addBook(Book &x);
     void removeBook(const int &x);
-    int searchBook(const int &x);
+    bool bookAvailability(Book x);
+    void setBookStatus(int &x, const bool &y);
+
+    bool searchBook(const int &x);
+
     void addMember(Member &x);
     void removeMember(int id);
     bool searchMember(const int &x);
-    void manageBooks(const int &x, const int &y, const int &z);
     bool checkMember(const int memID);
-    bool bookAvailability(Book x);
+    int BorrowedBookCountOfMember(const int &x);
+
+    void manageBooks(const int &bookid, const int &memberid, const int &userChoice);
+    
 };

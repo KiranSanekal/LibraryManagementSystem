@@ -13,5 +13,6 @@ class Member
 
     void recBorrowedBooks(int bookID);
     void memAction(int bookID, enum action);
+    void updateListOfBorrowedBooks(const int &bookID)
 
 };

@@ -5,6 +5,9 @@
 
 using namespace std;
 Library lib;
+Book b;
+Member m;
+
 
 
 // === UI helpers ===
@@ -19,7 +22,7 @@ Member getmemberfromstaff();
 
 Book getbookfromstaff()
 {
-    Book b;
+    
     cin.ignore(numeric_limits<streamsize>::max(), '\n'); // flush newline
     std::cout<<"Enter book title: \n"; //Ask Title
     getline(cin,b.title);
@@ -50,7 +53,6 @@ int getactionfromstaff()
 
 Member getmemberfromstaff()
 {
-    Member m;
     cout<<"Enter Member name: \n";
     getline(cin, m.memName);
     cout<<"Enter Member ID : \n";
@@ -107,18 +109,29 @@ void showStaffMenu()
                 res=lib.searchBook(bookid);
                 if(res==1)
                 {
-                    cout<<"book exists and can be borrowed"<<endl;
-                    cout<<"Do you want to borrow it?"<<endl;
-                    cout<<"1.Yes\n";
-                    cout<<"2.Return to main menu"<<endl;
-                    cin>>userChoice;
-                    if(userChoice==1)
+                    if(b.availabilityStatus==true)
                     {
-                        int memberid;
-                        memberid=getmemberIDfromstaff();
-                        lib.manageBooks(bookid,memberid, userChoice);
+                        cout<<"book exists and can be borrowed"<<endl;
+                        cout<<"Do you want to borrow it?"<<endl;
+                        cout<<"1.Yes\n";
+                        cout<<"2.Return to main menu"<<endl;
+                        cin>>userChoice;
+                        if(userChoice==1)
+                        {
+                            int memberid;
+                            memberid=getmemberIDfromstaff();
+                            if(lib.searchMember(memberid)==true)
+                            {
+                                lib.manageBooks(bookid,memberid, userChoice);
+                            }
+                            else
+                            {
+                                cout<<"Member doesnt exist"<<endl;
+                            }
+                            
+                        }
                     }
-                }
+                        
                 else if(res==2)
                 {
                     cout<<"book exists but not available at the moment"<<endl;
@@ -128,6 +141,11 @@ void showStaffMenu()
                     cout<<"book doesnt exist in the library"<<endl;
                 }
                 break;
+
+                    }
+                    
+                }
+                
             }
             case 4:
             {
@@ -163,7 +181,7 @@ void showStaffMenu()
             
             case 6:
             {
-                Member m;
+                //Member m;
                 m=getmemberfromstaff();
                 break;
             }
@@ -210,6 +228,39 @@ void showMainMenu()
 
 int main()
 {
+    Book books[5];
+    //Library l;
+    
+    books[0].storeMetaData(101, "C++ Programming", "Bjarne Stroustrup", true);
+    books[1].storeMetaData(102, "Effective C++", "Scott Meyers", true);
+    books[2].storeMetaData(103, "Clean Code", "Robert C. Martin", true);
+    books[3].storeMetaData(104, "Design Patterns", "Erich Gamma", true);
+    books[4].storeMetaData(105, "The Pragmatic Programmer", "Andrew Hunt", true);
+    for (Book i: books)
+    {
+        
+        lib.addBook(i);
+        
+    }
+    //cout<<l.listofBooks[2].title;
+
+
+    
+
+    // Initialize 5 members
+     Member members[5] = {
+        {1, "Alice"},
+        {2, "Bob"},
+        {3, "Charlie"},
+        {4, "Diana"},
+        {5, "Ethan"}
+    };
+    for(auto i:members)
+    {
+        lib.addMember(i);
+    }
+
+
     showMainMenu();
 
 
