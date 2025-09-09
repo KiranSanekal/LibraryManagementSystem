@@ -118,11 +118,17 @@ void showStaffMenu()
                         cin>>userChoice;
                         if(userChoice==1)
                         {
-                            int memberid;
-                            memberid=getmemberIDfromstaff();
-                            if(lib.searchMember(memberid)==true) //Search if member exists
+                            //int memberid;
+                            int memberid=getmemberIDfromstaff();
+                            Member* mptr=lib.getMember(memberid);
+                            if (!mptr) 
                             {
-                                lib.manageBooks(bookid,memberid, userChoice);
+                                cout << "No member found with ID " << memberid << endl;
+                                break;
+                            }
+                            else if(lib.searchMember(memberid)==true) //Search if member exists
+                            {
+                                lib.manageBooks(bookid,memberid, userChoice, mptr);
                             }
                             else
                             {
@@ -149,7 +155,11 @@ void showStaffMenu()
                 if(lib.searchMember(id))
                 {
                     cout<<"Member exists"<<endl;
-                };
+                }
+                else
+                {
+                    cout<<"member doesnt exist"<<endl;
+                }
                 break;
             }
     
@@ -159,11 +169,11 @@ void showStaffMenu()
                 int bookid=getbookIDfromstaff();
                 int memberid=getmemberIDfromstaff(); 
                 Member* mptr=lib.getMember(memberid);
-                    if (!mptr) 
-                    {
-                        cout << "No member found with ID " << memberid << endl;
-                        break;
-                    }
+                if (!mptr) 
+                {
+                    cout << "No member found with ID " << memberid << endl;
+                    break;
+                }
                 if(lib.isBookPartOfBorrowedBooks(bookid,memberid)==true)
                 {
                     

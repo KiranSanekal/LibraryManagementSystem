@@ -126,7 +126,7 @@ Book* Library::getBook(const int &bookid)
     return nullptr;
 }
 
-void Library::manageBooks(const int &bookid, const int &memberid, const int &userChoice, Member* m)
+void Library::manageBooks(int &bookid, const int &memberid, const int &userChoice, Member* m)
 {
     if (userChoice==1) //Member wishes to borrow book
     {
@@ -153,8 +153,9 @@ void Library::manageBooks(const int &bookid, const int &memberid, const int &use
     {
         if (isBookPartOfBorrowedBooks(bookid,memberid)==true) //Checks if the book to be returned is part of the borrowed list
         {
+            m->updateListOfBorrowedBooks(bookid, static_cast<Member::action>(userChoice));
             setBookStatus(bookid, true);
-
+            cout<<getBook(bookid)->title<<" successfully returned to library"<<endl;
         }
 
         

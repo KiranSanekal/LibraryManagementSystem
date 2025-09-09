@@ -27,6 +27,6 @@ class Library
     int getBorrowedBookCountOfMember(const int &x);
     bool isBookPartOfBorrowedBooks(const int &bookid, const int &memID);
 
-    void manageBooks(const int &bookid, const int &memberid, const int &userChoice, Member* m=nullptr);
+    void manageBooks(int &bookid, const int &memberid, const int &userChoice, Member* m=nullptr);
     
 };

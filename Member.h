@@ -11,6 +11,6 @@ class Member
     enum class action:int {borrowBook=1, returnBook=2};
     vector<int> borrowedBookIDs;
 
-    void updateListOfBorrowedBooks(const int &bookID, action useraction);
+    void updateListOfBorrowedBooks(int &bookID, action useraction);
 
 };
