@@ -78,7 +78,7 @@ void showStaffMenu()
         cout<<"2. Remove book\n";
         cout<<"3. Search book\n";
         cout<<"4. Search member\n";
-        cout<<"5. Mange book\n";
+        cout<<"5. Return book\n";
         cout<<"6. Add member\n";
       
         cin>>userChoice;
@@ -106,10 +106,10 @@ void showStaffMenu()
                 int bookid;
                 int res;
                 bookid=getbookIDfromstaff();
-                res=lib.searchBook(bookid);
-                if(res==1)
+                res=lib.searchBook(bookid); //Checks if book exists in the library
+                if(res==true)
                 {
-                    if(b.availabilityStatus==true)
+                    if((lib.getBook(bookid)->availabilityStatus)==true) //CHecks if book is available for borrowing
                     {
                         cout<<"book exists and can be borrowed"<<endl;
                         cout<<"Do you want to borrow it?"<<endl;
@@ -120,71 +120,73 @@ void showStaffMenu()
                         {
                             int memberid;
                             memberid=getmemberIDfromstaff();
-                            if(lib.searchMember(memberid)==true)
+                            if(lib.searchMember(memberid)==true) //Search if member exists
                             {
                                 lib.manageBooks(bookid,memberid, userChoice);
                             }
                             else
                             {
                                 cout<<"Member doesnt exist"<<endl;
-                            }
-                            
+                            }  
                         }
                     }
-                        
-                else if(res==2)
-                {
-                    cout<<"book exists but not available at the moment"<<endl;
+                    else
+                    {
+                        std::cout << "Book not available at the moment\n";
+                    }
                 }
-                else if(res==3)
+                else if(res==false)
                 {
                     cout<<"book doesnt exist in the library"<<endl;
                 }
                 break;
 
-                    }
-                    
-                }
-                
             }
             case 4:
             {
                 int id;
                 id=getmemberIDfromstaff();
-                lib.searchMember(id);
+                if(lib.searchMember(id))
+                {
+                    cout<<"Member exists"<<endl;
+                };
                 break;
             }
-            /*
+    
             case 5:
             {
-                int action_select;
-                int id;
-                action_select=getactionfromstaff();
-
-                if(action_select==1)
-                {
-                    lib.manageBooks(id, action_select);
-
-                }
-                if(action_select==2)
-                {
-                    lib.manageBooks(id,action_select);
-
-                }
                 
+                int bookid=getbookIDfromstaff();
+                int memberid=getmemberIDfromstaff(); 
+                if(lib.isBookPartOfBorrowedBooks(bookid,memberid)==true)
+                {
+                    lib.manageBooks(bookid,memberid, 2);
+                }
+                else
+                {
+                    cout<<"Book to be returned is not part of List of books borrowed by "<<lib.getMember(memberid)->memName<<endl;
+                }
+    
                 break;
             }
+              
+
+                
+                
+               
             
-            
-            */
-            
-            
+           /*
             case 6:
             {
                 //Member m;
                 m=getmemberfromstaff();
                 break;
             }
+           
+           */
+            
+            
+           
             
             
         }

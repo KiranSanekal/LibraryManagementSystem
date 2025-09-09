@@ -1,4 +1,5 @@
 #include "Library.h"
+
 using namespace std;
 #include <iostream>
 #include <vector>
@@ -14,14 +15,15 @@ void Library::addBook(Book &x)
 }
 
 
-void Library::removeBook(const int &x)
+void Library::removeBook(const int &idToRemove) //Tobeadded- when borrowed, book still exists in list of books-add condition to check availability status
 {
-    int idToRemove=x;
-    for(auto i:listofBooks)
-    {
-       auto newEnd= std::remove_if(listofBooks.begin(),listofBooks.end(),[idToRemove](const Book &x){return x.uniqueID==idToRemove;});
-       listofBooks.erase(newEnd,listofBooks.end());
-    }
+    
+    
+    auto newEnd= std::remove_if(listofBooks.begin(),listofBooks.end(),[idToRemove](const Book& x){return x.uniqueID==idToRemove;});
+    listofBooks.erase(newEnd,listofBooks.end());
+   
+  
+    
 }
 
 
@@ -32,19 +34,19 @@ bool Library::searchBook(const int &x)
     {
         if(i.uniqueID==x)
         {
-            return 1;
+            return true;
         }
     }
-    return 2;
+    return false;
 }
 
-void Library::setBookStatus(int &x, const bool &y)
+void Library::setBookStatus(const int &bookid, const bool &bookstatus)
 {
-    for(auto i:listofBooks)
+    for(auto& i:listofBooks)
     {
-        if(i.uniqueID==x)
+        if(i.uniqueID==bookid)
         {
-            i.availabilityStatus=y;
+            i.availabilityStatus=bookstatus;
         }
     }
 
@@ -57,7 +59,7 @@ void Library::addMember(Member &x)
 
 bool Library::searchMember(const int &x)
 {
-    for(auto i:listOfMembers)
+    for(auto& i:listOfMembers)
     {
         if(i.memberID==x)
         {
@@ -68,48 +70,92 @@ bool Library::searchMember(const int &x)
     
 }
 
-int Library::BorrowedBookCountOfMember(const int &x)
+Member* Library::getMember(const int &memid)
 {
-    for(auto i:listOfMembers)
+    for(auto& i:listOfMembers)
     {
-        return (i.borrowedBookIDs.size());
+        if(i.memberID==memid)
+        {
+            return &i;
+        }
     }
+    return nullptr;
+}
 
+
+
+int Library::getBorrowedBookCountOfMember(const int &memID)
+{
+    for(auto& i:listOfMembers)
+    {
+        if(i.memberID==memID)
+        {
+            return (i.borrowedBookIDs.size());
+        }
+    }
+    return 0;
+
+}
+
+bool Library::isBookPartOfBorrowedBooks(const int &bookid, const int &memID)
+{
+    for(auto& i:listOfMembers)
+    {
+        if(i.memberID==memID)
+        {
+            cout<<"Mem has borrowed "<<i.borrowedBookIDs.size()<<" Books"<<endl;
+            if (std::find((i.borrowedBookIDs).begin(), (i.borrowedBookIDs).end(),bookid)!=(i.borrowedBookIDs).end())
+            {
+                return true;
+            }
+        }
+        
+    }
+    return false;
+}
+
+Book* Library::getBook(const int &bookid)
+{
+    for(auto& i:listofBooks)
+    {
+        if(i.uniqueID==bookid)
+        {
+            return &i;
+        }
+    }
+    return nullptr;
 }
 
 void Library::manageBooks(const int &bookid, const int &memberid, const int &userChoice)
 {
-    if (userChoice==1)
+    if (userChoice==1) //Member wishes to borrow book
     {
             
-        if(BorrowedBookCountOfMember(memberid)<3)
+        if(getBorrowedBookCountOfMember(memberid)<3) //Checks for max limit of books for borrowing
         {
+            m.updateListOfBorrowedBooks()
+            setBookStatus(bookid,false);
+
+           // cout<<"After setting"<<(getBook(bookid))->availabilityStatus;
+            cout<<bookid<<" successfully assigned to "<<memberid<<endl;
             
-            setBookStatus(x)
-            cout<<book.title<<" successfully assigned to "<<m.memName<<endl;
-            break;
         }
         else
         {
-            cout<<m.memName<<"  has already reached the max limit for borrowing books"<<endl;
-            break;
+            cout<<memberid<<"  has already reached the max limit for borrowing books"<<endl;
 
         }
-            }
-        }
+    }
 
-    else if (z==2)
+    else if (userChoice==2) //Member wishes to return book            
     {
-        for (auto &book : listofBooks)
+        if (isBookPartOfBorrowedBooks(bookid,memberid)==true) //Checks if the book to be returned is part of the borrowed list
         {
-            if (book.uniqueID == x)
-            {
-                addBook(book);
-                book.availabilityStatus = true;
-                cout<<"Book return successful"<<endl;
-                break;
-            }
+            setBookStatus(bookid, true);
+
         }
+
+        
 
     }
 
@@ -117,7 +163,8 @@ void Library::manageBooks(const int &bookid, const int &memberid, const int &use
 
 }
 
-bool bookAvailability(Book &x)
+    
+bool getBookAvailability(Book &x)
 {
     if(x.availabilityStatus==true)
     {

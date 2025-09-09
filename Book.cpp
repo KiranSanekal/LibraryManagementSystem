@@ -8,14 +8,4 @@ void Book::storeMetaData(int bookid, string bookTitle, string bookAuthor, bool b
     this->uniqueID=bookid;
     this->title=bookTitle;
     
-
-
-
 }
-
-bool Book::getbookStatus(string uniqueID)
-{
-    return availabilityStatus;
-
-}
-

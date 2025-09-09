@@ -1,20 +1,19 @@
 #include "Member.h"
+#include<algorithm>
 
-void Member::recBorrowedBooks(int bookID)
+
+void Member::updateListOfBorrowedBooks(const int &bookID, action useraction) //Updates the List of borrowedbooks on borrowing or returning
 {
-    //borrowedList.push_back(bookID);
+    if(useraction==1)
+    {
+            borrowedBookIDs.push_back(bookID); //Add book to list of borrowed books
 
-}
-
-void Member::updateListOfBorrowedBooks(const int &bookID)
-{
-    borrowedBookIDs.push_back(bookID);
-
-}
-
-void Member::memAction(int bookID, enum action)
-{
-    //ask daisy
-
+    }
+    else if (useraction==2)
+    {
+            //Remove book from list of borrowed books
+            auto ne = remove(borrowedBookIDs.begin(), borrowedBookIDs.end(),bookID); 
+            borrowedBookIDs.erase(ne, borrowedBookIDs.end());
+    }
 
 }
