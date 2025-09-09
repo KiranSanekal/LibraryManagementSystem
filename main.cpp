@@ -158,9 +158,16 @@ void showStaffMenu()
                 
                 int bookid=getbookIDfromstaff();
                 int memberid=getmemberIDfromstaff(); 
+                Member* mptr=lib.getMember(memberid);
+                    if (!mptr) 
+                    {
+                        cout << "No member found with ID " << memberid << endl;
+                        break;
+                    }
                 if(lib.isBookPartOfBorrowedBooks(bookid,memberid)==true)
                 {
-                    lib.manageBooks(bookid,memberid, 2);
+                    
+                    lib.manageBooks(bookid,memberid, 2,mptr);
                 }
                 else
                 {

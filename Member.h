@@ -8,7 +8,7 @@ class Member
     public:
     int memberID;
     string memName;
-    enum action {borrowBook, returnBook};
+    enum class action:int {borrowBook=1, returnBook=2};
     vector<int> borrowedBookIDs;
 
     void updateListOfBorrowedBooks(const int &bookID, action useraction);

@@ -126,14 +126,15 @@ Book* Library::getBook(const int &bookid)
     return nullptr;
 }
 
-void Library::manageBooks(const int &bookid, const int &memberid, const int &userChoice)
+void Library::manageBooks(const int &bookid, const int &memberid, const int &userChoice, Member* m)
 {
     if (userChoice==1) //Member wishes to borrow book
     {
+        
             
         if(getBorrowedBookCountOfMember(memberid)<3) //Checks for max limit of books for borrowing
         {
-            m.updateListOfBorrowedBooks()
+            m->updateListOfBorrowedBooks(bookid, static_cast<Member::action>(userChoice));
             setBookStatus(bookid,false);
 
            // cout<<"After setting"<<(getBook(bookid))->availabilityStatus;
@@ -141,6 +142,7 @@ void Library::manageBooks(const int &bookid, const int &memberid, const int &use
             
         }
         else
+
         {
             cout<<memberid<<"  has already reached the max limit for borrowing books"<<endl;
 

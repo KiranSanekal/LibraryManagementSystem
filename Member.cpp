@@ -4,12 +4,13 @@
 
 void Member::updateListOfBorrowedBooks(const int &bookID, action useraction) //Updates the List of borrowedbooks on borrowing or returning
 {
-    if(useraction==1)
+    if(useraction==action::borrowBook)
     {
+        
             borrowedBookIDs.push_back(bookID); //Add book to list of borrowed books
 
     }
-    else if (useraction==2)
+    else if (useraction==action::returnBook)
     {
             //Remove book from list of borrowed books
             auto ne = remove(borrowedBookIDs.begin(), borrowedBookIDs.end(),bookID); 
