@@ -221,7 +221,7 @@ void showUserMenu()
 
 void showMainMenu()
 {
-    cout<<"Welcome to Daisy library"<<endl;
+    cout<<"Welcome to City library"<<endl;
     cout<<"Which among the following are you \n"<<endl;
     cout<<"1. Staff \n"
     "2. Member" <<endl;
